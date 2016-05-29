@@ -38,10 +38,16 @@ Func Fauchage()
 
 	$SpleepTime = Random(11000, 14000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
 
-
+	;FERMIER
 	;Couleur du ble 0xF5CC12
 	;Couleur Orge 0x546800
-	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x546800, 1)
+	;Couleur Avoine 0xC76E00
+
+	;MINEUR
+	;Couleur Fer 0xE3E2D1
+	;Couleur Cuivre 0xD38440
+
+	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0xD38440, 1)
 	; on recherche la couleur du Blé (0xF5CC12). Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
 
 	If Not @error Then ; On vérifie si la couleur a bien été trouvée.
@@ -53,10 +59,13 @@ Func Fauchage()
 		MouseMove($Coord[0], $Coord[1]) ; On déplace la souris sur les coordonnées de la ressource
 		$Color = PixelGetColor($Coord[0], $Coord[1]) ; On récupère la couleur sous la souris.
 		Hex($Color, 6) ; On la convertie en Hexadécimal
-		;ble surbrillance E2C95A
+		; ble surbrillance E2C95A
 		; orge surbrillance 8CD342
+		; fer surbrillance BCBBB2
 		If Not $Color = "8CD342" Then Verif() ;Si la couleur sous le curseur n'est pas celle d'une ressource en surbrillance, on lance la fonction Verif().
 		MouseClick("left", $Coord[0], $Coord[1]) ; On clique sur la ressource.
+
+
 		Sleep(500) ; On attend 0,5secs.
 
 
@@ -79,8 +88,11 @@ Func Fauchage()
 
 	if $TestVerif = 0 Then
 		$TestVerif = 1
+		;MsgBox(48, '"Entrer de verif"', "Entrer de verif ")
 		Verif() ; On lance la fonction Verif.
+
 	EndIf
+
 
 EndFunc   ;==>Fauchage
 
@@ -92,7 +104,7 @@ EndFunc   ;==>Fauchage
 Func Verif()
 
 	While 1
-
+		;MsgBox(48, '"Entrer de verif"', "Entrer de verif ")
 		$Combat = PixelGetColor(593, 610) ; Récupère la couleur, si un combat est lancé, la couleur est Orange.
 		$Combat = Hex($Combat, 6)
 
@@ -124,9 +136,11 @@ Func Verif()
 		$Combat = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x0000FF, 0) ; On cherche la couleur bleu, qui indique q'un combat est en cours.
 		If Not @error Then Call("Bip") ; Si la couleur est présente, on lance la fonction Bip().
 		Sleep(100) ; On attend 0,1 secondes.
-		Call("Fauchage") ; Si on arrive la, c'est que tout va bien
-	WEnd
 
+		Call("Fauchage") ; Si on arrive la, c'est que tout va bien
+
+	WEnd
+	;MsgBox(48, '"Sortie de verif"', "Sortie de verif ")
 	$TestVerif = 0
 
 EndFunc   ;==>Verif
