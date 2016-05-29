@@ -8,6 +8,8 @@ Global $Compteur ; On créé un compteur pour stocker le nombre de fois que l'on e
 
 Global $CompteurPods ; Idem que plus haut mais cette fois ci c'est pour stocker le nombre de fois que l'on coupe la ressource.
 
+Global $TestVerif ; Variable pour tester si Verif() est lancer => prevention stack overflow
+
 ;modif test github
 
 $Compteur = 0 ;
@@ -32,11 +34,14 @@ Fauchage()
 
 Func Fauchage()
 
+	$TestVerif = 0
+
 	$SpleepTime = Random(11000, 14000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
 
 
 	;Couleur du ble 0xF5CC12
-	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0xF5CC12, 1)
+	;Couleur Orge 0x546800
+	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x546800, 1)
 	; on recherche la couleur du Blé (0xF5CC12). Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
 
 	If Not @error Then ; On vérifie si la couleur a bien été trouvée.
@@ -48,7 +53,9 @@ Func Fauchage()
 		MouseMove($Coord[0], $Coord[1]) ; On déplace la souris sur les coordonnées de la ressource
 		$Color = PixelGetColor($Coord[0], $Coord[1]) ; On récupère la couleur sous la souris.
 		Hex($Color, 6) ; On la convertie en Hexadécimal
-		If Not $Color = "E2C95A" Then Verif() ;Si la couleur sous le curseur n'est pas celle d'une ressource en surbrillance, on lance la fonction Verif().
+		;ble surbrillance E2C95A
+		; orge surbrillance 8CD342
+		If Not $Color = "8CD342" Then Verif() ;Si la couleur sous le curseur n'est pas celle d'une ressource en surbrillance, on lance la fonction Verif().
 		MouseClick("left", $Coord[0], $Coord[1]) ; On clique sur la ressource.
 		Sleep(500) ; On attend 0,5secs.
 
@@ -70,7 +77,10 @@ Func Fauchage()
 
 	EndIf
 
-	Verif() ; On lance la fonction Verif.
+	if $TestVerif = 0 Then
+		$TestVerif = 1
+		Verif() ; On lance la fonction Verif.
+	EndIf
 
 EndFunc   ;==>Fauchage
 
@@ -116,6 +126,9 @@ Func Verif()
 		Sleep(100) ; On attend 0,1 secondes.
 		Call("Fauchage") ; Si on arrive la, c'est que tout va bien
 	WEnd
+
+	$TestVerif = 0
+
 EndFunc   ;==>Verif
 
 ;-------------------------------------------------------------------------------
