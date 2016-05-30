@@ -71,13 +71,17 @@ Func Fauchage()
 		MouseMove($Coord[0] + 3, $Coord[1] + 35) ; On déplace la souris sur les coordonnées de "faucher" (Qui est égale aux coordonnées de la ressource + 31 +51), la commande se met en subrillance (Orange)
 		$Color = PixelGetColor($Coord[0] + 10, $Coord[1] + 51) ; On récupère la couleur à l'endroit où est normalement faucher.
 		Hex($Color, 6) ; On convertit la couleur.
+
+
 		If Not $Color = "FF6600" Then Verif() ; Si ce n'est pas la couleur de la commande Faucher en surbrillance on lance la fonction Verif().
 		MouseClick("left", $Coord[0] + 10, $Coord[1] + 51) ; On clique sur Faucher.
 
 
 		$Combat = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x0000FF, 0) ; On recherche la couleur qui caracterise un combat lancé(Bleu ou Rouge, ici Bleu)
 		If Not @error Then Call("Bip") ; Si il n'y a pas d'erreur (Ce qui veut dire que la couleur est présente) c'est que le combat est lancé. Donc on lance la fonction qui Bip.
+
 		Sleep(5000) ; On attend 5sec
+
 		$Combat = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x0000FF, 0) ; Si l'utilisateur n'a pas encore arrêté le script et que le combat est en cours on relance le Bip
 		If Not @error Then Call("Bip")
 
