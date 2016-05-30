@@ -1,5 +1,7 @@
 ;==================== Début du script ====================
 
+#include "ChoixCouleur.au3"
+
 ; On initialise les variables en Global :
 
 Global $Coord[2] ; On créé un tableau à 2 dimensions pour stocker les coordonnées de la ressource détectée plus bas.
@@ -9,6 +11,8 @@ Global $Compteur ; On créé un compteur pour stocker le nombre de fois que l'on e
 Global $CompteurPods ; Idem que plus haut mais cette fois ci c'est pour stocker le nombre de fois que l'on coupe la ressource.
 
 Global $TestVerif ; Variable pour tester si Verif() est lancer => prevention stack overflow
+
+Global $Couleur ; Determine couleur du pixelsearch
 
 ;modif test github
 
@@ -36,18 +40,13 @@ Func Fauchage()
 
 	$TestVerif = 0
 
-	$SpleepTime = Random(11000, 14000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
+	$Couleur = GetColor ("ble") ; Dispobile ble orge avoine fer cuivre ATTENTTION  TOUT MINUSCULE
 
-	;FERMIER
-	;Couleur du ble 0xF5CC12
-	;Couleur Orge 0x546800
-	;Couleur Avoine 0xC76E00
+	$SpleepTime = Random(5000, 10000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
 
-	;MINEUR
-	;Couleur Fer 0xE3E2D1
-	;Couleur Cuivre 0xD38440
 
-	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0xD38440, 1)
+
+	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, $Couleur, 1)
 	; on recherche la couleur du Blé (0xF5CC12). Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
 
 	If Not @error Then ; On vérifie si la couleur a bien été trouvée.
@@ -69,11 +68,11 @@ Func Fauchage()
 		Sleep(500) ; On attend 0,5secs.
 
 
-		MouseMove($Coord[0] + 31, $Coord[1] + 51) ; On déplace la souris sur les coordonnées de "faucher" (Qui est égale aux coordonnées de la ressource + 31 +51), la commande se met en subrillance (Orange)
-		$Color = PixelGetColor($Coord[0] + 31, $Coord[1] + 51) ; On récupère la couleur à l'endroit où est normalement faucher.
+		MouseMove($Coord[0] + 3, $Coord[1] + 35) ; On déplace la souris sur les coordonnées de "faucher" (Qui est égale aux coordonnées de la ressource + 31 +51), la commande se met en subrillance (Orange)
+		$Color = PixelGetColor($Coord[0] + 10, $Coord[1] + 51) ; On récupère la couleur à l'endroit où est normalement faucher.
 		Hex($Color, 6) ; On convertit la couleur.
 		If Not $Color = "FF6600" Then Verif() ; Si ce n'est pas la couleur de la commande Faucher en surbrillance on lance la fonction Verif().
-		MouseClick("left", $Coord[0] + 31, $Coord[1] + 51) ; On clique sur Faucher.
+		MouseClick("left", $Coord[0] + 10, $Coord[1] + 51) ; On clique sur Faucher.
 
 
 		$Combat = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, 0x0000FF, 0) ; On recherche la couleur qui caracterise un combat lancé(Bleu ou Rouge, ici Bleu)
