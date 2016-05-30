@@ -12,7 +12,9 @@ Global $CompteurPods ; Idem que plus haut mais cette fois ci c'est pour stocker 
 
 Global $TestVerif ; Variable pour tester si Verif() est lancer => prevention stack overflow
 
-Global $Couleur = "orge" ; Determine couleur du pixelsearch. Disponible actuellement :  ble orge avoine fer cuivre ATTENTTION  TOUT MINUSCULE
+Global $Couleur = "orge" ; Determine ressource recherché. Disponible actuellement :  ble orge avoine fer cuivre ATTENTTION  TOUT MINUSCULE
+
+Global $SurbriCouleur ;Couleur quand ressource en surbrillance
 
 
 
@@ -40,13 +42,13 @@ Func Fauchage()
 
 	$TestVerif = 0
 
-	$MyColor = GetColor ($Couleur) ;
+	$MyColor = GetColor ($Couleur) ; Fonction qui return le code couleur de la ressource en 0xHexa
 
 	$SpleepTime = Random(5000, 10000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
 
 
 	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, $MyColor, 1)
-	; on recherche la couleur du Blé (0xF5CC12). Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
+	; on recherche la couleur de la ressource. Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
 
 	If Not @error Then ; On vérifie si la couleur a bien été trouvée.
 
@@ -57,10 +59,9 @@ Func Fauchage()
 		MouseMove($Coord[0], $Coord[1]) ; On déplace la souris sur les coordonnées de la ressource
 		$Color = PixelGetColor($Coord[0], $Coord[1]) ; On récupère la couleur sous la souris.
 		Hex($Color, 6) ; On la convertie en Hexadécimal
-		; ble surbrillance E2C95A
-		; orge surbrillance 8CD342
-		; fer surbrillance BCBBB2
-		If Not $Color = "8CD342" Then Verif() ;Si la couleur sous le curseur n'est pas celle d'une ressource en surbrillance, on lance la fonction Verif().
+
+
+		If Not $Color = $SurbriCouleur Then Verif() ;Si la couleur sous le curseur n'est pas celle d'une ressource en surbrillance, on lance la fonction Verif().
 		MouseClick("left", $Coord[0], $Coord[1]) ; On clique sur la ressource.
 
 
