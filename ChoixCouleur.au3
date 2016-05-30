@@ -1,14 +1,7 @@
-#cs ----------------------------------------------------------------------------
+;-------------------------------------------------------------------------------
+;                              COULEUR
+;-------------------------------------------------------------------------------
 
- AutoIt Version : 3.3.8.0
- Auteur:         MonNom
-
- Fonction du Script :
-	Modèle de Script AutoIt.
-
-#ce ----------------------------------------------------------------------------
-
-; Début du script - Ajouter votre code ci-dessous.
 
 Func GetColor ($Couleur)
 
@@ -27,6 +20,7 @@ Func GetColor ($Couleur)
 	;RAPPEL SURBRILLANCE:
 	; ble surbrillance E2C95A
 	; orge surbrillance 8CD342
+	; avoine surbrillance C89500
 	; fer surbrillance BCBBB2
 
 	Switch $Couleur
@@ -42,7 +36,7 @@ Func GetColor ($Couleur)
 
 	Case "avoine"
 
-		$SurbriCouleur = "" ; TODO surbri avoine
+		$SurbriCouleur = "C89500"
 		 return 0xC76E00
 
 	Case "fer"
@@ -51,7 +45,7 @@ Func GetColor ($Couleur)
 
 	Case "cuivre"
 
-		$SurbriCouleur = "" ; TODO surbri cuivre
+		$SurbriCouleur = "BCBBB2" ; TODO surbri cuivre
 		 return 0xD38440
 
 
