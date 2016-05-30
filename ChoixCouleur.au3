@@ -24,8 +24,9 @@ Func GetColor ($Couleur)
 	;Couleur Cuivre 0xD38440
 
 	Switch $Couleur
-     Case "orge"
+		Case "orge"
 
+			return 0x546800
 
 	Case "ble"
 
@@ -45,7 +46,8 @@ Func GetColor ($Couleur)
 
 
      Case Else
-         MsgBox(0, ErreurGetColor", "$Couleur est inconnu")
+         MsgBox(0, "ErreurGetColor", "$Couleur est inconnu")
+		 Exit 0
 
 	EndSwitch
 

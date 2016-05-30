@@ -12,9 +12,9 @@ Global $CompteurPods ; Idem que plus haut mais cette fois ci c'est pour stocker 
 
 Global $TestVerif ; Variable pour tester si Verif() est lancer => prevention stack overflow
 
-Global $Couleur ; Determine couleur du pixelsearch
+Global $Couleur = "orge" ; Determine couleur du pixelsearch. Disponible actuellement :  ble orge avoine fer cuivre ATTENTTION  TOUT MINUSCULE
 
-;modif test github
+
 
 $Compteur = 0 ;
 
@@ -40,13 +40,12 @@ Func Fauchage()
 
 	$TestVerif = 0
 
-	$Couleur = GetColor ("ble") ; Dispobile ble orge avoine fer cuivre ATTENTTION  TOUT MINUSCULE
+	$MyColor = GetColor ($Couleur) ;
 
 	$SpleepTime = Random(5000, 10000, 1) ; (tpsMin,tpsMax, 1 = nombre entier )
 
 
-
-	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, $Couleur, 1)
+	$Coord = PixelSearch(0, 0, @DesktopWidth, @DesktopHeight, $MyColor, 1)
 	; on recherche la couleur du Blé (0xF5CC12). Les coordonnés seront stockées dans $Coord[0] et $Coord[1].
 
 	If Not @error Then ; On vérifie si la couleur a bien été trouvée.
